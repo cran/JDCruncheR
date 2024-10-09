@@ -4,7 +4,8 @@ library("JDCruncheR")
 library("kableExtra")
 library("knitr")
 
-## ----echo=FALSE---------------------------------------------------------------
+## ----echo = FALSE-------------------------------------------------------------
+# nolint start line_length_linter
 refresh_policy <- structure(list(`Option sous JDemetra+` = c(
     "Fixed model",
     "Estimate regression coefficients",
@@ -46,12 +47,14 @@ if (opts_knit$get("rmarkdown.pandoc.to") == "latex") {
         column_spec(1, width = "4cm") %>%
         column_spec(2, width = "2.5cm")
 } else {
-    refresh_policy[1:6, 1] <- paste("Partial concurrent adjustment ->", refresh_policy[1:6, 1])
+    refresh_policy[1:6, 1] <- paste("Partial concurrent adjustment ->", 
+                                    refresh_policy[1:6, 1])
     kable(refresh_policy,
         caption = "Les différentes politiques de rafraîchissement",
         booktabs = TRUE
     )
 }
+# nolint end
 
 ## ----eval = FALSE-------------------------------------------------------------
 #  library("JDCruncheR")

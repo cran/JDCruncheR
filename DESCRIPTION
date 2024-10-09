@@ -2,7 +2,7 @@ Package: JDCruncheR
 Type: Package
 Title: Interface Between the 'JDemetra+' Cruncher and R, and Quality
         Report Generator
-Version: 0.2.4
+Version: 0.3.0
 Authors@R: c(
     person(given = "Tanguy", 
            family = "Barthelemy", role = c("aut", "cre", "art"),
@@ -20,16 +20,17 @@ Authors@R: c(
            family = "Smyk", role = c("aut"),
            email ="anna.smyk@insee.fr"))
 Description: Tool for generating quality reports from cruncher outputs (and calculating series scores). The latest version of the cruncher can be downloaded here: <https://github.com/jdemetra/jwsacruncher/releases>.
-URL: https://github.com/InseeFr/JDCruncheR
+URL: https://github.com/InseeFr/JDCruncheR,
+        https://inseefr.github.io/JDCruncheR/
 BugReports: https://github.com/InseeFr/JDCruncheR/issues
-Imports: XLConnect (>= 1.0.0)
-Suggests: knitr, kableExtra, rmarkdown
+Imports: openxlsx, stats, tools, utils
+Suggests: knitr, kableExtra, pkgdown, rmarkdown
 License: EUPL
 VignetteBuilder: knitr
 Encoding: UTF-8
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2
 NeedsCompilation: no
-Packaged: 2024-05-21 15:07:03 UTC; UTZK0M
+Packaged: 2024-10-09 12:47:00 UTC; UTZK0M
 Author: Tanguy Barthelemy [aut, cre, art],
   Alain Quartier-la-Tente [aut] (<https://orcid.org/0000-0001-7890-3857>),
   Institut national de la statistique et des études économiques [cph]
@@ -37,4 +38,4 @@ Author: Tanguy Barthelemy [aut, cre, art],
   Anna Smyk [aut]
 Maintainer: Tanguy Barthelemy <tanguy.barthelemy@insee.fr>
 Repository: CRAN
-Date/Publication: 2024-05-22 12:20:13 UTC
+Date/Publication: 2024-10-09 13:40:02 UTC

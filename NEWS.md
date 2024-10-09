@@ -8,13 +8,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.0] - 2024-10-09
+
 ### Changed
 
 * Update readme
+* remove all functions related to cruncher
+
 
 ### Fixed
 
-* resolve a bug
+* resolve a bug linked to shell function
+* resolve a bug related to accent colnames
+* lintr is up-to-date
+* `extract_QR` works with V3 workspaces
+* Fixed bug with Tramo-Seats series --> Now, WS with Tramo-Seats series are accepted!
+* if column of demetra_m are not available, there will be NA instead
+* lintr `any(is.na(...))` -> `anyNA(...)`
+
+
+### Added
+
+* Github Action to check the package
+* New functions to manage the `jdc_thresholds` option
 
 
 ## [0.2.4] - 2022-07-27
@@ -75,7 +91,8 @@ Bug fixed in the functions `retain_indicators()` and `remove_indicator()`.
  * addition of the parameter `log_file` to the functions `cruncher()` and `cruncher_and_param()` to export the cruncher log if required.
  * update of the options `default_matrix_item` and `default_tsmatrix_series`, in accordance with the parameters of version 2.2.0 of JDemetra+.
  
-[unreleased]: https://github.com/InseeFr/JDCruncheR/compare/v0.2.4...HEAD
+[unreleased]: https://github.com/InseeFr/JDCruncheR/compare/v0.3.0...HEAD
+[0.3.0]: https://github.com/InseeFr/JDCruncheR/compare/v0.2.4...v0.3.0
 [0.2.4]: https://github.com/InseeFr/JDCruncheR/compare/v0.2.3...v0.2.4
 [0.2.3]: https://github.com/InseeFr/JDCruncheR/compare/v0.2.2...v0.2.3
 [0.2.2]: https://github.com/InseeFr/JDCruncheR/compare/v0.2.1...v0.2.2

@@ -6,7 +6,8 @@ library("JDCruncheR")
 library("kableExtra")
 library("knitr")
 
-## ----echo=FALSE, eval=FALSE---------------------------------------------------
+## ----echo = FALSE, eval = FALSE-----------------------------------------------
+#  # nolint start line_length_linter
 #  refresh_policy <- structure(
 #      list(
 #          `Option in JDemetra+` = c(
@@ -34,7 +35,9 @@ library("knitr")
 #              "Complete re-identification of the whole RegARIMA model, all regression variables and ARIMA model orders."
 #          )
 #      ),
-#      .Names = c("Option in JDemetra+", "Cruncher option", "Description"), class = "data.frame", row.names = c(NA_integer_, -7L)
+#      .Names = c("Option in JDemetra+", "Cruncher option", "Description"),
+#      class = "data.frame",
+#      row.names = c(NA_integer_, -7L)
 #  )
 #  
 #  kable(refresh_policy,
@@ -50,6 +53,7 @@ library("knitr")
 #      group_rows("Concurrent", 8, 8) %>%
 #      column_spec(1, width = "4cm") %>%
 #      column_spec(2, width = "2.5cm")
+#  # nolint end
 
 ## ----eval = FALSE-------------------------------------------------------------
 #  library("JDCruncheR")

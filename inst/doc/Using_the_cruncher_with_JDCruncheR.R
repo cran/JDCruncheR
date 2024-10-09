@@ -5,6 +5,7 @@ library("kableExtra")
 library("knitr")
 
 ## ----echo=FALSE---------------------------------------------------------------
+# nolint start line_length_linter
 refresh_policy <- structure(
     list(
         `Option in JDemetra+` = c(
@@ -32,7 +33,9 @@ refresh_policy <- structure(
             "Complete re-identification of the whole RegARIMA model, all regression variables and ARIMA model orders."
         )
     ),
-    .Names = c("Option in JDemetra+", "Cruncher options", "Description"), class = "data.frame", row.names = c(NA, -8L)
+    .Names = c("Option in JDemetra+", "Cruncher options", "Description"), 
+    class = "data.frame", 
+    row.names = c(NA, -8L)
 )
 
 if (opts_knit$get("rmarkdown.pandoc.to") == "latex") {
@@ -50,12 +53,14 @@ if (opts_knit$get("rmarkdown.pandoc.to") == "latex") {
         column_spec(1, width = "4cm") %>%
         column_spec(2, width = "2.5cm")
 } else {
-    refresh_policy[2:7, 1] <- paste("Partial concurrent adjustment ->", refresh_policy[2:7, 1])
+    refresh_policy[2:7, 1] <- paste("Partial concurrent adjustment ->", 
+                                    refresh_policy[2:7, 1])
     kable(refresh_policy,
         caption = "The refresh/revision policies",
         booktabs = TRUE
     )
 }
+# nolint end
 
 ## ----eval = FALSE-------------------------------------------------------------
 #  library("JDCruncheR")

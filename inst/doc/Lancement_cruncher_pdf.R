@@ -6,7 +6,8 @@ library("JDCruncheR")
 library("kableExtra")
 library("knitr")
 
-## ----echo=FALSE, eval=FALSE---------------------------------------------------
+## ----echo = FALSE, eval = FALSE-----------------------------------------------
+#  # nolint start line_length_linter
 #  refresh_policy <- structure(list(`Option sous JDemetra+` = c(
 #      "Fixed model",
 #      "Estimate regression coefficients",
@@ -47,6 +48,7 @@ library("knitr")
 #      group_rows("Concurrent", 7, 7) %>%
 #      column_spec(1, width = "4cm") %>%
 #      column_spec(2, width = "2.5cm")
+#  # nolint end
 
 ## ----eval = FALSE-------------------------------------------------------------
 #  library("JDCruncheR")
