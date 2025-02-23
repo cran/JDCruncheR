@@ -9,6 +9,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 
+## [0.3.3] - 2025-02-20
+
+### Fixed
+
+* remove the use of lambda function and base pipe for R version < 4.1
+
+
+## [0.3.2] - 2025-02-07
+
+### Added
+
+* New item `grade` to the `jdc_thresholds` option to specify the different grades when computing the score
+* New arguments `file` which will replace `matrix_output_file` for `extract_QR()`
+* New arguments `x` which can contains a diagnostic matrix for `extract_QR()`
+
+### Fixed
+
+* bug in `recode_vec()` when changing the grades with `factor` object
+* `extractQR()` works with v3 now
+
+
 ## [0.3.1] - 2024-10-10
 
 ### Fixed
@@ -37,7 +58,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-* Github Action to check the package
+* GitHub Action to check the package
 * New functions to manage the `jdc_thresholds` option
 
 
@@ -99,7 +120,9 @@ Bug fixed in the functions `retain_indicators()` and `remove_indicator()`.
  * addition of the parameter `log_file` to the functions `cruncher()` and `cruncher_and_param()` to export the cruncher log if required.
  * update of the options `default_matrix_item` and `default_tsmatrix_series`, in accordance with the parameters of version 2.2.0 of JDemetra+.
  
-[unreleased]: https://github.com/InseeFr/JDCruncheR/compare/v0.3.1...HEAD
+[unreleased]: https://github.com/InseeFr/JDCruncheR/compare/v0.3.3...HEAD
+[0.3.3]: https://github.com/InseeFr/JDCruncheR/compare/v0.3.2..v0.3.3
+[0.3.2]: https://github.com/InseeFr/JDCruncheR/compare/v0.3.1..v0.3.2
 [0.3.1]: https://github.com/InseeFr/JDCruncheR/compare/v0.3.0..v0.3.1
 [0.3.0]: https://github.com/InseeFr/JDCruncheR/compare/v0.2.4...v0.3.0
 [0.2.4]: https://github.com/InseeFr/JDCruncheR/compare/v0.2.3...v0.2.4
