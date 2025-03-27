@@ -1,11 +1,11 @@
-d22ee12f10b5c876c3ff08e63754ef70 *DESCRIPTION
+75e8d9400cefb8952530ea9084857957 *DESCRIPTION
 1392144a214c6e5f0eed4111bd395b48 *NAMESPACE
-f49e532e8619bc686450dec6b010aade *NEWS.md
+b69f59fa0956a8915e817ca69ffb23e8 *NEWS.md
 d15e1578d6f41eefb2b388e10a0c477f *R/JDCruncheR-package.R
-95e3e9b4c275f82864c56ee3144ea75e *R/QR_export.R
-694031958f473aaf71bca86eb2cd3ab1 *R/QR_functions.R
-07f70a0917fa8df875ecb088a243d9eb *R/QR_matrix_classes.R
-14850812bc8a6e09b8d284ff6a5c14ab *R/extractQR.R
+7bdea4dacc4d6c1547af94c072af6d1b *R/QR_export.R
+d167c94b274125f809e92f277a89f24b *R/QR_functions.R
+d57646243d64e598179967a6d1ff7a26 *R/QR_matrix_classes.R
+076bb0e672e760681897a20b754ed816 *R/extractQR.R
 e1fd3aab44cd87107afdd94eca672489 *R/thresholds.R
 567d6d8a29a2511d76d80c3576570285 *R/zzz.R
 51dcfdc35b96b1d784aa4c61457c4eec *README.md
@@ -28,7 +28,7 @@ b40a48f4c7d3c6f4e02199924ec93e14 *inst/extdata/data/world.ods
 152ee6e62397309ba75fcbd8f21b472e *man/QR_matrix.Rd
 20273a86f724cd761052e283df33f4d9 *man/QR_var_manipulation.Rd
 914b0e6405b76fc4323b95f68734725f *man/add_indicator.Rd
-6c1b3052f1dcad92d67e8afe4c195cec *man/compute_score.Rd
+1f7c34119c6fd8f584ad651038c0504f *man/compute_score.Rd
 f920ea4d3887f4b9e97c1aaaed821978 *man/export_xlsx.QR_matrix.Rd
 0d4d502031f52ed62311cb5bbd89cad2 *man/export_xlsx.Rd
 aa901f8ad4d5daf621a91167e514946f *man/export_xlsx.mQR_matrix.Rd

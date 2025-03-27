@@ -2,7 +2,7 @@ Package: JDCruncheR
 Type: Package
 Title: Interface Between the 'JDemetra+' Cruncher and R, and Quality
         Report Generator
-Version: 0.3.3
+Version: 0.3.4
 Authors@R: c(
     person(given = "Tanguy", 
            family = "Barthelemy", role = c("aut", "cre", "art"),
@@ -29,7 +29,7 @@ License: EUPL
 Encoding: UTF-8
 RoxygenNote: 7.3.2
 NeedsCompilation: no
-Packaged: 2025-02-19 17:01:44 UTC; UTZK0M
+Packaged: 2025-03-27 18:01:16 UTC; UTZK0M
 Author: Tanguy Barthelemy [aut, cre, art],
   Alain Quartier-la-Tente [aut] (<https://orcid.org/0000-0001-7890-3857>),
   Institut national de la statistique et des études économiques [cph]
@@ -37,4 +37,4 @@ Author: Tanguy Barthelemy [aut, cre, art],
   Anna Smyk [aut]
 Maintainer: Tanguy Barthelemy <tanguy.barthelemy@insee.fr>
 Repository: CRAN
-Date/Publication: 2025-02-23 15:00:02 UTC
+Date/Publication: 2025-03-27 19:00:03 UTC
