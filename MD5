@@ -1,12 +1,12 @@
-75e8d9400cefb8952530ea9084857957 *DESCRIPTION
+055f70a79ebf4255746c3c32001fa72d *DESCRIPTION
 1392144a214c6e5f0eed4111bd395b48 *NAMESPACE
-b69f59fa0956a8915e817ca69ffb23e8 *NEWS.md
+f1c60932e05814b9c8a6c0c3b78f30aa *NEWS.md
 d15e1578d6f41eefb2b388e10a0c477f *R/JDCruncheR-package.R
-7bdea4dacc4d6c1547af94c072af6d1b *R/QR_export.R
-d167c94b274125f809e92f277a89f24b *R/QR_functions.R
-d57646243d64e598179967a6d1ff7a26 *R/QR_matrix_classes.R
-076bb0e672e760681897a20b754ed816 *R/extractQR.R
-e1fd3aab44cd87107afdd94eca672489 *R/thresholds.R
+76a25ba348c6a4635b69764767e557bf *R/QR_export.R
+5c9de8853798c74fe6475e340d424d61 *R/QR_functions.R
+fe6adb0cbc83c5a41a09a519f7a91988 *R/QR_matrix_classes.R
+df804b175f0ae33a9967a09af3acf9fe *R/extractQR.R
+4df186a1c289a26dbcf9e23d1685dfdc *R/thresholds.R
 567d6d8a29a2511d76d80c3576570285 *R/zzz.R
 51dcfdc35b96b1d784aa4c61457c4eec *README.md
 7a46301797307c6faab6bc264381ea7b *inst/extdata/WS/ws_ipi.xml
@@ -28,7 +28,7 @@ b40a48f4c7d3c6f4e02199924ec93e14 *inst/extdata/data/world.ods
 152ee6e62397309ba75fcbd8f21b472e *man/QR_matrix.Rd
 20273a86f724cd761052e283df33f4d9 *man/QR_var_manipulation.Rd
 914b0e6405b76fc4323b95f68734725f *man/add_indicator.Rd
-1f7c34119c6fd8f584ad651038c0504f *man/compute_score.Rd
+f540ba511f52c1d3c5a5b3e7349aa690 *man/compute_score.Rd
 f920ea4d3887f4b9e97c1aaaed821978 *man/export_xlsx.QR_matrix.Rd
 0d4d502031f52ed62311cb5bbd89cad2 *man/export_xlsx.Rd
 aa901f8ad4d5daf621a91167e514946f *man/export_xlsx.mQR_matrix.Rd
@@ -56,3 +56,8 @@ d08510e3bf1f1b2f2dfea261c044bc67 *man/recode_indicator_num.Rd
 75c880bd0580cd07c1f9a0dc599c85e7 *man/set_thresholds.Rd
 3ffc4a73746cd23701d8f02767a51a57 *man/sort.Rd
 ff050dd547193bd12ec96f1aa0e2b821 *man/weighted_score.Rd
+f9ed1edc26fdfa80ff9a9123370d5b0e *tests/testthat.R
+40e54184c2b2215ecc9bd18c9f3ff706 *tests/testthat/data/demetra_m1.csv
+79ee4626f40b62231ffb9ffd9efd5699 *tests/testthat/data/demetra_m2.csv
+b27a1312eaba50942352b0397cf22cba *tests/testthat/data/demetra_m3.csv
+f0991e064ffa3a37ef6a3589cd09f484 *tests/testthat/test-extractQR.R

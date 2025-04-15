@@ -1,5 +1,6 @@
 
-create_NA_type <- function(type = c("character", "integer", "double", "logical", "complex", "raw", "Date"),
+create_NA_type <- function(type = c("character", "integer", "double", "logical",
+                                    "complex", "raw", "Date"),
                            len = 1L) {
     type <- match.arg(type)
     output <- rep(
@@ -23,7 +24,16 @@ find_variable <- function(
         pattern,
         type = c("double", "integer", "character", "logical"),
         p_value = FALSE,
-        variable = "") {
+        variable = "",
+        exact = FALSE) {
+
+    if (!exact) {
+        pattern <- gsub(
+            x = pattern,
+            pattern = "$",
+            replacement = "(\\.(\\d){1,})?$", fixed = TRUE
+        )
+    }
 
     cols <- id_cols <- grep(pattern = pattern, colnames(demetra_m))
 
@@ -60,14 +70,34 @@ find_variable <- function(
     }
 
     if (length(cols) == 0L) {
+        # Aucune colonne
         return(create_NA_type(type = type, len = nrow(demetra_m)))
-    } else if (length(cols) > 1L) {
-        message("Multiple column found for extraction of ", variable, "\n",
-                ifelse(p_value, "Last column selected", "first column selected"))
-        return(demetra_m[, cols[ifelse(p_value, length(cols), 1L)], drop = TRUE])
-    } else {
+    } else if (length(cols) == 1L) {
+        # 1 seule colonnes
         return(demetra_m[, cols, drop = TRUE])
     }
+
+    # Multiples colonnes
+
+    # cond: les multiples colonnes sont elles égales ?
+    cond <- all(apply(
+        X = demetra_m[, cols, drop = FALSE],
+        MARGIN = 2L,
+        FUN = `==`,
+        demetra_m[, cols[1L], drop = TRUE]
+    ))
+
+    if (cond) {
+        id <- 1L
+    } else {
+        message(
+            "Multiple column found for extraction of ", variable, "\n",
+            ifelse(p_value, "Last column selected", "First column selected")
+        )
+        id <- ifelse(p_value, length(cols), 1L)
+    }
+
+    return(demetra_m[, cols[id], drop = TRUE])
 }
 
 #' @title Extraction d'un bilan qualité
@@ -236,7 +266,7 @@ extract_QR <- function(file,
                 " and will be removed in the future. ",
                 "Please use the `file` argument instead or ",
                 "the `x` argument which may contain a diagnostic matrix ",
-                "that has already been imported.")
+                "that has already been imported.", call. = FALSE)
         file <- matrix_output_file
     }
 
@@ -244,12 +274,13 @@ extract_QR <- function(file,
         stop("Please call extract_QR() on a csv file containing at least ",
              "one cruncher output matrix (demetra_m.csv for example) ",
              "with the argument `file` ",
-             "or directly on a matrix with the argument `x`")
+             "or directly on a matrix with the argument `x`", call. = FALSE)
     } else if (missing(x)) {
         if (length(file) == 0L
             || !file.exists(file)
             || !endsWith(x = file, suffix = ".csv")) {
-            stop("The chosen file desn't exist or isn't a csv file")
+            stop("The chosen file desn't exist or isn't a csv file",
+                 call. = FALSE)
         }
 
         demetra_m <- read.csv(
@@ -266,7 +297,7 @@ extract_QR <- function(file,
     }
 
     if (nrow(demetra_m) == 0L || ncol(demetra_m) == 0L) {
-        stop("The chosen csv file is empty")
+        stop("The chosen csv file is empty.", call. = FALSE)
     }
 
     series <- gsub(
@@ -300,6 +331,21 @@ extract_QR <- function(file,
         frequency = frequency_series[["values"]],
         arima_model = arima_model[["values"]]
     )
+    missing_items <- c(
+        normality[["missing"]],
+        test[["missing"]],
+        stat_OOS[["missing"]],
+        stat_Q[["missing"]],
+        outliers[["missing"]],
+        frequency = frequency_series[["missing"]],
+        arima_model = arima_model[["missing"]]
+    )
+
+    if (length(missing_items) > 0L) {
+        warning("Some items are missing. ",
+                "Please re-compute the cruncher export with the options: ",
+                toString(missing_items), call. = FALSE)
+    }
 
     QR <- QR_matrix(modalities = QR_modalities, values = QR_values)
     return(QR)
@@ -390,7 +436,7 @@ extractARIMA <- function(demetra_m) {
 
     arima_q <- find_variable(
         demetra_m,
-        pattern = "(^arima\\.q$)|(^q\\.*\\d*$)",
+        pattern = "(^arima\\.q$)|(^q$)",
         type = "integer",
         variable = "arima.q"
     )
@@ -398,7 +444,7 @@ extractARIMA <- function(demetra_m) {
 
     arima_bp <- find_variable(
         demetra_m,
-        pattern = "(^arima\\.bp$)|(^bp\\.*\\d*$)",
+        pattern = "(^arima\\.bp$)|(^bp$)",
         type = "integer",
         variable = "arima.bp"
     )
@@ -429,8 +475,16 @@ extractARIMA <- function(demetra_m) {
         arima_bq = arima_bq
     )
     arima_df[["arima_model"]] <- paste0(
-        "(", arima_df[["arima_p"]], ",", arima_df[["arima_d"]], ",", arima_df[["arima_q"]], ")",
-        "(", arima_df[["arima_bp"]], ",", arima_df[["arima_bd"]], ",", arima_df[["arima_bq"]], ")"
+        "(",
+        arima_df[["arima_p"]], ",",
+        arima_df[["arima_d"]], ",",
+        arima_df[["arima_q"]],
+        ")",
+        "(",
+        arima_df[["arima_bp"]], ",",
+        arima_df[["arima_bd"]], ",",
+        arima_df[["arima_bq"]],
+        ")"
     )
     return(list(values = arima_df[["arima_model"]],
                 missing = missing_var))
@@ -442,7 +496,7 @@ extractStatQ <- function(demetra_m, thresholds = getOption("jdc_thresholds")) {
 
     q_value <- find_variable(
         demetra_m,
-        pattern = "(^m\\.statistics\\.q$)|(^q\\.*\\d*$)",
+        pattern = "(^m\\.statistics\\.q$)|(^q$)",
         type = "double",
         variable = "q statistic"
     )
@@ -454,7 +508,9 @@ extractStatQ <- function(demetra_m, thresholds = getOption("jdc_thresholds")) {
         type = "double",
         variable = "q-m2 statistic"
     )
-    if (all(is.na(q_m2_value))) missing_var <- c(missing_var, "m-statistics.q-m2")
+    if (all(is.na(q_m2_value))) {
+        missing_var <- c(missing_var, "m-statistics.q-m2")
+    }
 
     stat_Q_modalities <- data.frame(
         q = cut(
@@ -486,27 +542,32 @@ extractStatQ <- function(demetra_m, thresholds = getOption("jdc_thresholds")) {
                 missing = missing_var))
 }
 
-extractOOS_test <- function(demetra_m, thresholds = getOption("jdc_thresholds")) {
+extractOOS_test <- function(demetra_m,
+                            thresholds = getOption("jdc_thresholds")) {
 
     missing_var <- NULL
 
     mean_value <- find_variable(
         demetra_m,
-        pattern = "(^mean\\.*\\d*$)",
+        pattern = "(^mean$)",
         type = "double",
         variable = "mean",
         p_value = TRUE
     )
-    if (all(is.na(mean_value))) missing_var <- c(missing_var, "diagnostics.out-of-sample.mean:2")
+    if (all(is.na(mean_value))) {
+        missing_var <- c(missing_var, "diagnostics.out-of-sample.mean:2")
+    }
 
     mse_value <- find_variable(
         demetra_m,
-        pattern = "(^mse\\.*\\d*$)",
+        pattern = "(^mse$)",
         type = "double",
         variable = "mse",
         p_value = TRUE
     )
-    if (all(is.na(mse_value))) missing_var <- c(missing_var, "diagnostics.out-of-sample.mse:2")
+    if (all(is.na(mse_value))) {
+        missing_var <- c(missing_var, "diagnostics.out-of-sample.mse:2")
+    }
 
     stat_OOS_modalities <- data.frame(
         oos_mean = cut(
@@ -539,7 +600,8 @@ extractOOS_test <- function(demetra_m, thresholds = getOption("jdc_thresholds"))
                 missing = missing_var))
 }
 
-extractDistributionTests <- function(demetra_m, thresholds = getOption("jdc_thresholds")) {
+extractDistributionTests <- function(demetra_m,
+                                     thresholds = getOption("jdc_thresholds")) {
 
     missing_var <- NULL
 
@@ -550,7 +612,9 @@ extractDistributionTests <- function(demetra_m, thresholds = getOption("jdc_thre
         variable = "kurtosis",
         p_value = TRUE
     )
-    if (all(is.na(kurtosis_pvalue))) missing_var <- c(missing_var, "residuals.kurtosis:3")
+    if (all(is.na(kurtosis_pvalue))) {
+        missing_var <- c(missing_var, "residuals.kurtosis:3")
+    }
 
     skewness_pvalue <- find_variable(
         demetra_m,
@@ -559,7 +623,9 @@ extractDistributionTests <- function(demetra_m, thresholds = getOption("jdc_thre
         variable = "skewness",
         p_value = TRUE
     )
-    if (all(is.na(skewness_pvalue))) missing_var <- c(missing_var, "residuals.skewness:3")
+    if (all(is.na(skewness_pvalue))) {
+        missing_var <- c(missing_var, "residuals.skewness:3")
+    }
 
     homoskedasticity_pvalue <- find_variable(
         demetra_m,
@@ -568,7 +634,9 @@ extractDistributionTests <- function(demetra_m, thresholds = getOption("jdc_thre
         variable = "homoskedasticity",
         p_value = TRUE
     )
-    if (all(is.na(homoskedasticity_pvalue))) missing_var <- c(missing_var, "residuals.lb2:3")
+    if (all(is.na(homoskedasticity_pvalue))){
+        missing_var <- c(missing_var, "residuals.lb2:3")
+    }
 
     normality_pvalue <- find_variable(
         demetra_m,
@@ -577,7 +645,9 @@ extractDistributionTests <- function(demetra_m, thresholds = getOption("jdc_thre
         variable = "normality",
         p_value = TRUE
     )
-    if (all(is.na(normality_pvalue))) missing_var <- c(missing_var, "residuals.lb:3")
+    if (all(is.na(normality_pvalue))) {
+        missing_var <- c(missing_var, "residuals.lb:3")
+    }
 
     independency_pvalue <- find_variable(
         demetra_m,
@@ -586,7 +656,13 @@ extractDistributionTests <- function(demetra_m, thresholds = getOption("jdc_thre
         variable = "independency",
         p_value = TRUE
     )
-    if (all(is.na(independency_pvalue))) missing_var <- c(missing_var, "residuals.dh:3", "residuals.doornikhansen:3")
+    if (all(is.na(independency_pvalue))) {
+        missing_var <- append(
+            x = missing_var,
+            values = c("residuals.dh:3", "residuals.doornikhansen:3")
+        )
+    }
+
 
     distribution_modalities <- data.frame(
         residuals_homoskedasticity = cut(
@@ -643,7 +719,8 @@ extractDistributionTests <- function(demetra_m, thresholds = getOption("jdc_thre
                 missing = missing_var))
 }
 
-extractOutliers <- function(demetra_m, thresholds = getOption("jdc_thresholds")) {
+extractOutliers <- function(demetra_m,
+                            thresholds = getOption("jdc_thresholds")) {
 
     missing_var <- NULL
 
@@ -701,7 +778,8 @@ extractOutliers <- function(demetra_m, thresholds = getOption("jdc_thresholds"))
                 missing = missing_var))
 }
 
-extractSeasTest <- function(demetra_m, thresholds = getOption("jdc_thresholds")) {
+extractSeasTest <- function(demetra_m,
+                            thresholds = getOption("jdc_thresholds")) {
 
     missing_var <- NULL
 
@@ -712,7 +790,12 @@ extractSeasTest <- function(demetra_m, thresholds = getOption("jdc_thresholds"))
         variable = "qs_residual_sa_on_sa",
         p_value = TRUE
     )
-    if (all(is.na(qs_residual_sa_on_sa))) missing_var <- c(missing_var, "diagnostics.seas-sa-qs:2", "diagnostics.seas-sa-qs")
+    if (all(is.na(qs_residual_sa_on_sa))) {
+        missing_var <- append(
+            x = missing_var,
+            values = c("diagnostics.seas-sa-qs:2", "diagnostics.seas-sa-qs")
+        )
+    }
 
     qs_residual_sa_on_i <- find_variable(
         demetra_m,
@@ -721,7 +804,12 @@ extractSeasTest <- function(demetra_m, thresholds = getOption("jdc_thresholds"))
         variable = "qs_residual_sa_on_i",
         p_value = TRUE
     )
-    if (all(is.na(qs_residual_sa_on_i))) missing_var <- c(missing_var, "diagnostics.seas-i-qs:2", "diagnostics.seas-i-qs")
+    if (all(is.na(qs_residual_sa_on_i))) {
+        missing_var <- append(
+            x = missing_var,
+            values = c("diagnostics.seas-i-qs:2", "diagnostics.seas-i-qs")
+        )
+    }
 
     f_residual_sa_on_sa <- find_variable(
         demetra_m,
@@ -730,7 +818,12 @@ extractSeasTest <- function(demetra_m, thresholds = getOption("jdc_thresholds"))
         variable = "f_residual_sa_on_sa",
         p_value = TRUE
     )
-    if (all(is.na(f_residual_sa_on_sa))) missing_var <- c(missing_var, "diagnostics.seas-sa-f:2", "diagnostics.seas-sa-f")
+    if (all(is.na(f_residual_sa_on_sa))) {
+        missing_var <- append(
+            x = missing_var,
+            values = c("diagnostics.seas-sa-f:2", "diagnostics.seas-sa-f")
+        )
+    }
 
     f_residual_sa_on_i <- find_variable(
         demetra_m,
@@ -739,25 +832,40 @@ extractSeasTest <- function(demetra_m, thresholds = getOption("jdc_thresholds"))
         variable = "f_residual_sa_on_i",
         p_value = TRUE
     )
-    if (all(is.na(f_residual_sa_on_i))) missing_var <- c(missing_var, "diagnostics.seas-i-f:2", "diagnostics.seas-i-f")
+    if (all(is.na(f_residual_sa_on_i))) {
+        missing_var <- append(
+            x = missing_var,
+            values = c("diagnostics.seas-i-f:2", "diagnostics.seas-i-f")
+        )
+    }
 
     f_residual_td_on_sa <- find_variable(
         demetra_m,
-        pattern = "(^diagnostics\\.td\\.sa\\.last$)|(^td\\.sa\\.last$)",
+        pattern = "(^diagnostics\\.td\\.sa\\.last(\\.(\\d){1,})?$)|(^td\\.sa\\.last(\\.(\\d){1,})?$)",
         type = "double",
         variable = "f_residual_td_on_sa",
         p_value = TRUE
     )
-    if (all(is.na(f_residual_td_on_sa))) missing_var <- c(missing_var, "diagnostics.td-sa-last:2", "diagnostics.td-sa-last")
+    if (all(is.na(f_residual_td_on_sa))) {
+        missing_var <- append(
+            x = missing_var,
+            values = c("diagnostics.td-sa-last:2", "diagnostics.td-sa-last")
+        )
+    }
 
     f_residual_td_on_i <- find_variable(
         demetra_m,
-        pattern = "(^diagnostics\\.td\\.i\\.last$)|(^td\\.i\\.last$)",
+        pattern = "(^diagnostics\\.td\\.i\\.last(\\.(\\d){1,})?$)|(^td\\.i\\.last(\\.(\\d){1,})?$)",
         type = "double",
         variable = "f_residual_td_on_i",
         p_value = TRUE
     )
-    if (all(is.na(f_residual_td_on_i))) missing_var <- c(missing_var, "diagnostics.td-i-last:2", "diagnostics.td-i-last")
+    if (all(is.na(f_residual_td_on_i))) {
+        missing_var <- append(
+            x = missing_var,
+            values = c("diagnostics.td-i-last:2", "diagnostics.td-i-last")
+        )
+    }
 
     test_values <- cbind(
         qs_residual_sa_on_sa, f_residual_sa_on_sa,
