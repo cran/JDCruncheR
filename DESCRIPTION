@@ -1,17 +1,20 @@
 Type: Package
 Package: JDCruncheR
-Title: Interface Between the 'JDemetra+' Cruncher and R, and Quality
-        Report Generator
-Version: 0.3.6
+Title: 'JDemetra+' Quality Report Generator
+Version: 0.4.0
 Authors@R: c(
     person(given = "Tanguy", 
            family = "Barthelemy", 
            role = c("aut", "cre", "art"),
            email ="tanguy.barthelemy@insee.fr"),
+    person(given = "Eulalie", 
+           family = "Delaune", 
+           role = c("aut"),
+           email ="eulalie.delaune-virrion@insee.fr"),
     person(given = "Alain",
            family = "Quartier-la-Tente",
            role = "aut",
-           email = "alain.quartier-la-tente@insee.fr",
+           email = "alain.quartier@yahoo.fr",
            comment = c(ORCID = "0000-0001-7890-3857")),
     person(given = NULL, 
            family = "Institut national de la statistique et des études économiques",
@@ -30,13 +33,15 @@ URL: https://github.com/InseeFr/JDCruncheR,
 BugReports: https://github.com/InseeFr/JDCruncheR/issues
 Depends: R (>= 4.1)
 Imports: openxlsx, stats, tools, utils
-Suggests: testthat (>= 3.0.0)
+Suggests: knitr, rmarkdown, testthat (>= 3.0.0)
 Config/testthat/edition: 3
 Encoding: UTF-8
-RoxygenNote: 7.3.2
+Config/roxygen2/version: 8.0.0
+VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2025-07-24 13:29:15 UTC; UTZK0M
+Packaged: 2026-06-12 14:54:26 UTC; onyxia
 Author: Tanguy Barthelemy [aut, cre, art],
+  Eulalie Delaune [aut],
   Alain Quartier-la-Tente [aut] (ORCID:
     <https://orcid.org/0000-0001-7890-3857>),
   Institut national de la statistique et des études économiques [cph]
@@ -44,4 +49,4 @@ Author: Tanguy Barthelemy [aut, cre, art],
   Anna Smyk [aut]
 Maintainer: Tanguy Barthelemy <tanguy.barthelemy@insee.fr>
 Repository: CRAN
-Date/Publication: 2025-07-24 14:20:14 UTC
+Date/Publication: 2026-06-12 15:40:02 UTC

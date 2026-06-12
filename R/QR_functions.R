@@ -13,8 +13,9 @@ recode_vec <- function(x, recode_variable) {
     return(x)
 }
 
-#' Calcul d'un score global
+#' @title Calcul d'un score global
 #'
+#' @description
 #' Permet de calculer un score global à partir d'un bilan qualité
 #'
 #' @param x Objet de type \code{\link{QR_matrix}} ou \code{\link{mQR_matrix}}.
@@ -53,10 +54,10 @@ recode_vec <- function(x, recode_variable) {
 #' vecteur numérique nommé contenant des poids et dont les noms correspondent
 #' aux variables de la matrice des modalités à utiliser dans le score. Ainsi,
 #' avec le paramètre
-#' \code{score_pond = c(qs_residual_sa_on_sa = 10, f_residual_td_on_sa = 5)}
-#' le score sera calculé à partir des deux variables \code{qs_residual_sa_on_sa}
+#' \code{score_pond = c(qs_residual_s_on_sa = 10, f_residual_td_on_sa = 5)}
+#' le score sera calculé à partir des deux variables \code{qs_residual_s_on_sa}
 #' et \code{f_residual_td_on_sa}. Les notes associées aux modalités de la
-#' variable \code{qs_residual_sa_on_sa} seront multipliées par 10 et celles
+#' variable \code{qs_residual_s_on_sa} seront multipliées par 10 et celles
 #' associées à la variable \code{f_residual_td_on_sa} seront multipliées par 5.
 #' Dans le calcul du score, certaines variables peuvent être manquantes: pour ne
 #' pas prendre en compte ces valeurs dans le calcul, il suffit d'utiliser le
@@ -105,7 +106,7 @@ recode_vec <- function(x, recode_variable) {
 #' # Chemin menant au fichier demetra_m.csv
 #' demetra_path <- file.path(
 #'     system.file("extdata", package = "JDCruncheR"),
-#'     "WS/ws_ipi/Output/SAProcessing-1",
+#'     "WS/WS_world/Output/SAProcessing-1",
 #'     "demetra_m.csv"
 #' )
 #'
@@ -124,8 +125,9 @@ recode_vec <- function(x, recode_variable) {
 NULL
 #> NULL
 
-#' Score calculation
+#' @title Score calculation
 #'
+#' @description
 #' To calculate a score for each series from a quality report
 #'
 #' @param x a \code{\link{QR_matrix}} or \code{\link{mQR_matrix}} object.
@@ -161,9 +163,9 @@ NULL
 #' The score calculation is based on the \code{score_pond} parameter, which is a
 #' named integer vector containing the weights to apply to the (modalities
 #' matrix) variables. For example, with
-#' \code{score_pond = c(qs_residual_sa_on_sa = 10, f_residual_td_on_sa = 5)},
-#' the score will be based on the variables \code{qs_residual_sa_on_sa} and
-#' \code{f_residual_td_on_sa}. The \code{qs_residual_sa_on_sa} grades will be
+#' \code{score_pond = c(qs_residual_s_on_sa = 10, f_residual_td_on_sa = 5)},
+#' the score will be based on the variables \code{qs_residual_s_on_sa} and
+#' \code{f_residual_td_on_sa}. The \code{qs_residual_s_on_sa} grades will be
 #' multiplied by 10 and the \code{f_residual_td_on_sa grades}, by 5. To ignore
 #' the missing values when calculating a score, use the parameter
 #' \code{na.rm = TRUE}.
@@ -210,7 +212,7 @@ NULL
 #' # Path of matrix demetra_m
 #' demetra_path <- file.path(
 #'     system.file("extdata", package = "JDCruncheR"),
-#'     "WS/ws_ipi/Output/SAProcessing-1",
+#'     "WS/WS_world/Output/SAProcessing-1",
 #'     "demetra_m.csv"
 #' )
 #'
@@ -231,8 +233,8 @@ NULL
 compute_score.QR_matrix <- function(
     x,
     score_pond = c(
-        qs_residual_sa_on_sa = 30L,
-        f_residual_sa_on_sa = 30L,
+        qs_residual_s_on_sa = 30L,
+        f_residual_s_on_sa = 30L,
         qs_residual_sa_on_i = 20L,
         f_residual_sa_on_i = 20L,
         f_residual_td_on_sa = 30L,
@@ -312,7 +314,7 @@ compute_score.QR_matrix <- function(
                         x[["modalities"]][, name] %in%
                             indicator_condition[["conditions_modalities"]]
                     },
-                    FUN.VALUE = logical(1L)
+                    FUN.VALUE = logical(nrow(x[["modalities"]]))
                 ),
                 na.rm = TRUE
             )
@@ -439,7 +441,7 @@ compute_score.default <- function(x, ...) {
 #' # Chemin menant au fichier demetra_m.csv
 #' demetra_path <- file.path(
 #'     system.file("extdata", package = "JDCruncheR"),
-#'     "WS/ws_ipi/Output/SAProcessing-1",
+#'     "WS/WS_world/Output/SAProcessing-1",
 #'     "demetra_m.csv"
 #' )
 #'
@@ -475,7 +477,7 @@ NULL
 #' # Path of matrix demetra_m
 #' demetra_path <- file.path(
 #'     system.file("extdata", package = "JDCruncheR"),
-#'     "WS/ws_ipi/Output/SAProcessing-1",
+#'     "WS/WS_world/Output/SAProcessing-1",
 #'     "demetra_m.csv"
 #' )
 #'
@@ -570,7 +572,7 @@ weighted_score.mQR_matrix <- function(x, pond = 1L) {
 #' # Chemin menant au fichier demetra_m.csv
 #' demetra_path <- file.path(
 #'     system.file("extdata", package = "JDCruncheR"),
-#'     "WS/ws_ipi/Output/SAProcessing-1",
+#'     "WS/WS_world/Output/SAProcessing-1",
 #'     "demetra_m.csv"
 #' )
 #'
@@ -608,7 +610,7 @@ NULL
 #' # Path of matrix demetra_m
 #' demetra_path <- file.path(
 #'     system.file("extdata", package = "JDCruncheR"),
-#'     "WS/ws_ipi/Output/SAProcessing-1",
+#'     "WS/WS_world/Output/SAProcessing-1",
 #'     "demetra_m.csv"
 #' )
 #'
@@ -692,7 +694,7 @@ sort.mQR_matrix <- function(
 #' # Chemin menant au fichier demetra_m.csv
 #' demetra_path <- file.path(
 #'     system.file("extdata", package = "JDCruncheR"),
-#'     "WS/ws_ipi/Output/SAProcessing-1",
+#'     "WS/WS_world/Output/SAProcessing-1",
 #'     "demetra_m.csv"
 #' )
 #'
@@ -703,7 +705,7 @@ sort.mQR_matrix <- function(
 #' QR1 <- compute_score(x = QR, n_contrib_score = 5)
 #' QR2 <- compute_score(
 #'     x = QR,
-#'     score_pond = c(qs_residual_sa_on_sa = 5, qs_residual_sa_on_i = 30,
+#'     score_pond = c(qs_residual_s_on_sa = 5, qs_residual_sa_on_i = 30,
 #'                    f_residual_td_on_sa = 10, f_residual_td_on_i = 40,
 #'                    oos_mean = 30, residuals_skewness = 15, m7 = 25)
 #' )
@@ -741,7 +743,7 @@ NULL
 #' # Path of matrix demetra_m
 #' demetra_path <- file.path(
 #'     system.file("extdata", package = "JDCruncheR"),
-#'     "WS/ws_ipi/Output/SAProcessing-1",
+#'     "WS/WS_world/Output/SAProcessing-1",
 #'     "demetra_m.csv"
 #' )
 #'
@@ -752,7 +754,7 @@ NULL
 #' QR1 <- compute_score(x = QR, n_contrib_score = 5)
 #' QR2 <- compute_score(
 #'     x = QR,
-#'     score_pond = c(qs_residual_sa_on_sa = 5, qs_residual_sa_on_i = 30,
+#'     score_pond = c(qs_residual_s_on_sa = 5, qs_residual_sa_on_i = 30,
 #'                    f_residual_td_on_sa = 10, f_residual_td_on_i = 40,
 #'                    oos_mean = 30, residuals_skewness = 15, m7 = 25)
 #' )
@@ -848,7 +850,7 @@ extract_score.mQR_matrix <- function(
 #' # Chemin menant au fichier demetra_m.csv
 #' demetra_path <- file.path(
 #'     system.file("extdata", package = "JDCruncheR"),
-#'     "WS/ws_ipi/Output/SAProcessing-1",
+#'     "WS/WS_world/Output/SAProcessing-1",
 #'     "demetra_m.csv"
 #' )
 #'
@@ -891,7 +893,7 @@ NULL
 #' # Path of matrix demetra_m
 #' demetra_path <- file.path(
 #'     system.file("extdata", package = "JDCruncheR"),
-#'     "WS/ws_ipi/Output/SAProcessing-1",
+#'     "WS/WS_world/Output/SAProcessing-1",
 #'     "demetra_m.csv"
 #' )
 #'
@@ -996,7 +998,7 @@ retain_indicators.mQR_matrix <- function(x, ...) {
 #' # Chemin menant au fichier demetra_m.csv
 #' demetra_path <- file.path(
 #'     system.file("extdata", package = "JDCruncheR"),
-#'     "WS/ws_ipi/Output/SAProcessing-1",
+#'     "WS/WS_world/Output/SAProcessing-1",
 #'     "demetra_m.csv"
 #' )
 #'
@@ -1004,8 +1006,8 @@ retain_indicators.mQR_matrix <- function(x, ...) {
 #' QR <- extract_QR(demetra_path)
 #'
 #' # Calculer differents scores
-#' QR1 <- compute_score(QR, score_pond = c(m7 = 2, q = 3, qs_residual_sa_on_sa = 5))
-#' QR2 <- compute_score(QR, score_pond = c(m7 = 2, qs_residual_sa_on_sa = 5))
+#' QR1 <- compute_score(QR, score_pond = c(m7 = 2, q = 3, qs_residual_s_on_sa = 5))
+#' QR2 <- compute_score(QR, score_pond = c(m7 = 2, qs_residual_s_on_sa = 5))
 #'
 #' # Fusionner 2 bilans qualité
 #' try(rbind(QR1, QR2)) # Une erreur est renvoyée
@@ -1035,7 +1037,7 @@ NULL
 #' # Path of matrix demetra_m
 #' demetra_path <- file.path(
 #'     system.file("extdata", package = "JDCruncheR"),
-#'     "WS/ws_ipi/Output/SAProcessing-1",
+#'     "WS/WS_world/Output/SAProcessing-1",
 #'     "demetra_m.csv"
 #' )
 #'
@@ -1043,8 +1045,8 @@ NULL
 #' QR <- extract_QR(demetra_path)
 #'
 #' # Compute differents scores
-#' QR1 <- compute_score(QR, score_pond = c(m7 = 2, q = 3, qs_residual_sa_on_sa = 5))
-#' QR2 <- compute_score(QR, score_pond = c(m7 = 2, qs_residual_sa_on_sa = 5))
+#' QR1 <- compute_score(QR, score_pond = c(m7 = 2, q = 3, qs_residual_s_on_sa = 5))
+#' QR2 <- compute_score(QR, score_pond = c(m7 = 2, qs_residual_s_on_sa = 5))
 #'
 #' # Merge two quality report
 #' try(rbind(QR1, QR2)) # Une erreur est renvoyée
