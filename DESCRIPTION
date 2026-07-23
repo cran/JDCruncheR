@@ -1,7 +1,7 @@
 Type: Package
 Package: JDCruncheR
 Title: 'JDemetra+' Quality Report Generator
-Version: 0.4.0
+Version: 0.4.1
 Authors@R: c(
     person(given = "Tanguy", 
            family = "Barthelemy", 
@@ -28,9 +28,9 @@ Description: Tool for generating quality reports from cruncher outputs
     can be downloaded here:
     <https://github.com/jdemetra/jwsacruncher/releases>.
 License: EUPL
-URL: https://github.com/InseeFr/JDCruncheR,
-        https://inseefr.github.io/JDCruncheR/
-BugReports: https://github.com/InseeFr/JDCruncheR/issues
+URL: https://github.com/InseeFr/rjd3qr,
+        https://inseefr.github.io/rjd3qr/
+BugReports: https://github.com/InseeFr/rjd3qr/issues
 Depends: R (>= 4.1)
 Imports: openxlsx, stats, tools, utils
 Suggests: knitr, rmarkdown, testthat (>= 3.0.0)
@@ -39,7 +39,7 @@ Encoding: UTF-8
 Config/roxygen2/version: 8.0.0
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2026-06-12 14:54:26 UTC; onyxia
+Packaged: 2026-07-23 15:33:15 UTC; onyxia
 Author: Tanguy Barthelemy [aut, cre, art],
   Eulalie Delaune [aut],
   Alain Quartier-la-Tente [aut] (ORCID:
@@ -49,4 +49,4 @@ Author: Tanguy Barthelemy [aut, cre, art],
   Anna Smyk [aut]
 Maintainer: Tanguy Barthelemy <tanguy.barthelemy@insee.fr>
 Repository: CRAN
-Date/Publication: 2026-06-12 15:40:02 UTC
+Date/Publication: 2026-07-23 16:00:08 UTC

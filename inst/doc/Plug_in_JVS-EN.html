@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>Plug-in JVS - EN</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Plug-in JVS - EN</h1>
+
+
+
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;JDCruncheR&quot;</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="co">#&gt; Attaching package: &#39;JDCruncheR&#39;</span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="co">#&gt; The following object is masked from &#39;package:base&#39;:</span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="co">#&gt;     write</span></span></code></pre></div>
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<p>This vignette explains how to create a JVS Quality Report with the
+{JDCruncheR} package. This only works for v3.</p>
+</div>
+<div id="definition-of-the-jvs-qr" class="section level2">
+<h2>Definition of the JVS QR</h2>
+<p>The JVS (Job Vacancy Survey) plug-in is an add-on for the JDemetra+
+software.</p>
+<div id="version-2" class="section level3">
+<h3>Version 2</h3>
+<p>Version 2 is available on GitHub <a href="https://github.com/Sace2015">Sace2015</a>: <a href="https://github.com/Sace2015/EurostatQR" class="uri">https://github.com/Sace2015/EurostatQR</a>. You will find
+the <a href="https://github.com/Sace2015/EurostatQR/raw/refs/heads/master/2018-10-26%20A%20PlugIn%20For%20Eurostat%20Job%20Vacancy%20Survey.docx">plug-in
+documentation</a> on the same repository.</p>
+</div>
+<div id="version-3" class="section level3">
+<h3>Version 3</h3>
+<p>In version 3, the plug-in is hosted on <a href="https://github.com/jdemetra/">jdemetra</a>’s GitHub, in the <a href="https://github.com/jdemetra/jdplus-incubator/">jdplus-incubator</a>
+repository. To download the latest version, go to the <a href="https://github.com/jdemetra/jdplus-incubator/releases">Releases</a>
+section, then download the plug-in (named
+jdplus-eurostat-desktop-plugin).</p>
+</div>
+<div id="description" class="section level3">
+<h3>Description</h3>
+<p>The plug-in contains 30 columns:</p>
+<ul>
+<li><strong>Series</strong>: Name of the series</li>
+<li><strong>Method</strong>: Seasonal adjustment method used
+(Tramo-Seats or X13) and the specification</li>
+<li><strong>Period</strong>: Periodicity of the series (12 for monthly
+and 4 for quarterly)</li>
+<li><strong>Nobs</strong>: Number of observations</li>
+<li><strong>Start</strong>: Starting date</li>
+<li><strong>End</strong>: Ending date</li>
+<li><strong>Adjustment</strong>: Kind of adjustment performed: NSA(non
+seasonally and calendar adjusted), CA (calendar adjusted) or SCA
+(seasonally and calendar adjusted)</li>
+<li><strong>Presence of Seasonality in the Raw Series</strong>: Result
+(Yes, No, Uncertain) of a a combined test based on 3 tests: the Fisher
+test, the Kruskal-Wallis test and the Ljung-Box test.</li>
+<li><strong>Presence of TD effects</strong>: Result (Yes or No) of the
+JD+ Fisher joint test.</li>
+<li><strong>Log-Transformation</strong>: Decomposition model. If “Yes”:
+A logarithmic transformation is done by Tramo-Seats for the complete
+adjustment; A logarithmic transformation is done by X13 for the
+Reg-Arima part and a multiplicative model is used for the decomposition
+per se.</li>
+<li><strong>ARIMA Model</strong>: Orders (p,d,q)(P,D,Q) of the ARIMA
+model</li>
+<li><strong>LeapYear</strong>: Presence of a Leap Year effect (Yes or
+No)</li>
+<li><strong>MovingHoliday</strong>: Presence of an Easter effect (Yes or
+No)</li>
+<li><strong>NbTD</strong>: Number of trading-day regressors (including
+the Leap Year regressor)</li>
+<li><strong>Noutliers</strong>: Total number of outliers</li>
+<li><strong>Outlier1</strong>, <strong>Outlier2</strong>,
+<strong>Outlier3</strong>: The 3 main outliers. The importance is
+measured by the absolute value of the t-statistic associated with the
+outlier.</li>
+<li><strong>Residual Seasonality in SA Series (F-test)</strong>:
+Presence of residual seasonality in the SCA series. The test used here
+is a Fisher test. The test is done at the 5% level.</li>
+<li><strong>Residual TD Effect</strong>: Presence of residual
+trading-day effect in the SCA series. The test used here is a Fisher
+test based on the default Gregorian trading-day regressors. The test is
+done at the 5% level.</li>
+<li><strong>Q-Stat (for X13)</strong>: Final Q statistics (available for
+X13 only)</li>
+<li><strong>Final Henderson Filter</strong>: Length of the Henderson
+filter used in the final estimation of the trend-cycle in table D12
+(available for X13 only).</li>
+<li><strong>Stage 2 Henderson Filter</strong>: Length of the Henderson
+filter used in the provisional estimation of the trend-cycle in table D6
+(available for X13 only).</li>
+<li><strong>Seasonal Filter</strong>: Seasonal filter used in the final
+estimation of the seasonal component in table D10 (available for
+X13-adjusted series).</li>
+<li><strong>Irregular Standard-Deviation</strong>: Standard deviation of
+the irregular defined as (SA - Trend)</li>
+<li><strong>Quality (for TS)</strong>: JDemetra+ global quality
+assessment</li>
+<li><strong>Max-Adj</strong>: Indicator of the “size” of the seasonal
+and calendar adjustment.</li>
+</ul>
+<p><span class="math display">\[
+100 \times max(\left | \frac{Y_t - SA_t}{Y_t}\right |)
+\]</span></p>
+<ul>
+<li><strong>Autocorrelation of order 1 of the SA series</strong>:
+Reports the autocorrelation of order 1 of the series <span class="math inline">\(SA_t - SA_{t-1}\)</span></li>
+<li><strong>Normality test (P-value)</strong>: P-value of the Normal
+test to check if the autocorrelation is significant.</li>
+<li><strong>Negative and significant autocorrelation</strong>: A warning
+is issued when the autocorrelation is negative and significant.</li>
+</ul>
+</div>
+</div>
+<div id="creation-of-the-output-files" class="section level2">
+<h2>Creation of the output files</h2>
+<p>To create a JVS Quality Report, you need to use the JDemetra+
+cruncher in version 3. First, if you do not have downloaded the
+JDemetra+ cruncher, you can download it from GitHub : <a href="https://github.com/jdemetra/jdplus-main/releases" class="uri">https://github.com/jdemetra/jdplus-main/releases</a>. The
+file you should download starts with “jwsacruncher-standalone”.</p>
+<p>To call the cruncher, you can use the {rjwsacruncher} package with
+specific options.</p>
+<p>The goal of this step is to generate a demetra_m file containing a
+lot of informations on series to study, and also several files
+containing the components of the series.</p>
+<p>To generate those files, you need to use the cruncher with the
+following options:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;rjwsacruncher&quot;</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="fu">options</span>(</span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>    <span class="at">is_cruncher_v3 =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>    <span class="at">default_matrix_item =</span> <span class="fu">c</span>(</span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>        <span class="st">&quot;span.start&quot;</span>,</span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>        <span class="st">&quot;span.end&quot;</span>,</span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a>        <span class="st">&quot;log&quot;</span>,</span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a>        <span class="st">&quot;span.n&quot;</span>,</span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a>        <span class="st">&quot;regression.nout&quot;</span>,</span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a>        <span class="st">&quot;regression.ntd&quot;</span>,</span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a>        <span class="st">&quot;m-statistics.m7&quot;</span>,</span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a>        <span class="st">&quot;decomposition.seasonal-filters&quot;</span>,</span>
+<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a>        <span class="st">&quot;decomposition.trend-filter&quot;</span>,</span>
+<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a>        <span class="st">&quot;decomposition.d7-trend-filter&quot;</span>,</span>
+<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a>        <span class="st">&quot;quality.summary&quot;</span>,</span>
+<span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a>        <span class="st">&quot;regression.lp&quot;</span>,</span>
+<span id="cb2-18"><a href="#cb2-18" tabindex="-1"></a>        <span class="st">&quot;regression.leaster&quot;</span>,</span>
+<span id="cb2-19"><a href="#cb2-19" tabindex="-1"></a>        <span class="st">&quot;diagnostics.seas-sa-ac1:3&quot;</span>,</span>
+<span id="cb2-20"><a href="#cb2-20" tabindex="-1"></a>        <span class="st">&quot;diagnostics.seas-sa-ac1&quot;</span>,</span>
+<span id="cb2-21"><a href="#cb2-21" tabindex="-1"></a>        <span class="st">&quot;diagnostics.seas-lin-combined&quot;</span>,</span>
+<span id="cb2-22"><a href="#cb2-22" tabindex="-1"></a>        <span class="st">&quot;regression.out(*)&quot;</span>,</span>
+<span id="cb2-23"><a href="#cb2-23" tabindex="-1"></a>        <span class="st">&quot;regression.td-ftest:3&quot;</span>,</span>
+<span id="cb2-24"><a href="#cb2-24" tabindex="-1"></a>        <span class="st">&quot;residuals.lb:3&quot;</span>,</span>
+<span id="cb2-25"><a href="#cb2-25" tabindex="-1"></a>        <span class="st">&quot;diagnostics.td-sa-last:2&quot;</span>,</span>
+<span id="cb2-26"><a href="#cb2-26" tabindex="-1"></a>        <span class="st">&quot;diagnostics.seas-sa-f:2&quot;</span>,</span>
+<span id="cb2-27"><a href="#cb2-27" tabindex="-1"></a>        <span class="st">&quot;arima.p&quot;</span>, <span class="st">&quot;arima.d&quot;</span>, <span class="st">&quot;arima.q&quot;</span>, <span class="st">&quot;arima.bp&quot;</span>, <span class="st">&quot;arima.bd&quot;</span>, <span class="st">&quot;arima.bq&quot;</span>,</span>
+<span id="cb2-28"><a href="#cb2-28" tabindex="-1"></a>        <span class="st">&quot;m-statistics.q&quot;</span>, <span class="st">&quot;m-statistics.q-m2&quot;</span></span>
+<span id="cb2-29"><a href="#cb2-29" tabindex="-1"></a>    ),</span>
+<span id="cb2-30"><a href="#cb2-30" tabindex="-1"></a>    <span class="at">default_tsmatrix_series =</span> <span class="fu">c</span>(</span>
+<span id="cb2-31"><a href="#cb2-31" tabindex="-1"></a>        <span class="st">&quot;decomposition.y_cmp&quot;</span>,</span>
+<span id="cb2-32"><a href="#cb2-32" tabindex="-1"></a>        <span class="st">&quot;decomposition.s_cmp&quot;</span>,</span>
+<span id="cb2-33"><a href="#cb2-33" tabindex="-1"></a>        <span class="st">&quot;decomposition.sa_cmp&quot;</span>,</span>
+<span id="cb2-34"><a href="#cb2-34" tabindex="-1"></a>        <span class="st">&quot;decomposition.t_cmp&quot;</span></span>
+<span id="cb2-35"><a href="#cb2-35" tabindex="-1"></a>    )</span>
+<span id="cb2-36"><a href="#cb2-36" tabindex="-1"></a>)</span>
+<span id="cb2-37"><a href="#cb2-37" tabindex="-1"></a></span>
+<span id="cb2-38"><a href="#cb2-38" tabindex="-1"></a><span class="fu">cruncher_and_param</span>(</span>
+<span id="cb2-39"><a href="#cb2-39" tabindex="-1"></a>    <span class="at">workspace =</span> <span class="st">&quot;path/to/the/workspace/file.xml&quot;</span>,</span>
+<span id="cb2-40"><a href="#cb2-40" tabindex="-1"></a>    <span class="at">cruncher_bin_directory =</span> <span class="st">&quot;path/to/the/cruncher/v3/bin/directory&quot;</span>,</span>
+<span id="cb2-41"><a href="#cb2-41" tabindex="-1"></a>    <span class="at">csv_layout =</span> <span class="st">&quot;vtable&quot;</span>,</span>
+<span id="cb2-42"><a href="#cb2-42" tabindex="-1"></a>    <span class="at">short_column_headers =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb2-43"><a href="#cb2-43" tabindex="-1"></a>    <span class="at">refreshall =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb2-44"><a href="#cb2-44" tabindex="-1"></a>    <span class="at">v3 =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb2-45"><a href="#cb2-45" tabindex="-1"></a>    <span class="at">delete_existing_file =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb2-46"><a href="#cb2-46" tabindex="-1"></a>    <span class="at">policy =</span> <span class="st">&quot;None&quot;</span></span>
+<span id="cb2-47"><a href="#cb2-47" tabindex="-1"></a>)</span></code></pre></div>
+<p>At this step, you should have generated 5 files.</p>
+</div>
+<div id="creation-of-report-jvs" class="section level2">
+<h2>Creation of report JVS</h2>
+<p>Once the cruncher has generated the correct outputs, the JVS Quality
+Report can be generated.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="co"># Path leading to the directory containing the needed files</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>dir_path <span class="ot">&lt;-</span> <span class="fu">system.file</span>(</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>    <span class="st">&quot;extdata&quot;</span>,</span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>    <span class="st">&quot;WS/WS_world/Output/SAProcessing-1&quot;</span>,</span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>    <span class="at">package =</span> <span class="st">&quot;JDCruncheR&quot;</span></span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>)</span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>JVS <span class="ot">&lt;-</span> <span class="fu">extract_JVS</span>(<span class="at">dir =</span> dir_path)</span></code></pre></div>
+<table style="width:100%;">
+<colgroup>
+<col width="33%" />
+<col width="8%" />
+<col width="8%" />
+<col width="6%" />
+<col width="14%" />
+<col width="14%" />
+<col width="14%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Series</th>
+<th align="left">Method</th>
+<th align="right">Period</th>
+<th align="right">Nobs</th>
+<th align="left">Start</th>
+<th align="left">End</th>
+<th align="left">Adjustment</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Siachen Glacier (frozen)</td>
+<td align="left">X13</td>
+<td align="right">12</td>
+<td align="right">300</td>
+<td align="left">2000-01-01</td>
+<td align="left">2024-12-01</td>
+<td align="left">SCA</td>
+</tr>
+<tr class="even">
+<td align="left">Nagorno-Karabakh (frozen)</td>
+<td align="left">X13</td>
+<td align="right">12</td>
+<td align="right">300</td>
+<td align="left">2000-01-01</td>
+<td align="left">2024-12-01</td>
+<td align="left">SA</td>
+</tr>
+<tr class="odd">
+<td align="left">Mongolia (frozen)</td>
+<td align="left">X13</td>
+<td align="right">12</td>
+<td align="right">300</td>
+<td align="left">2000-01-01</td>
+<td align="left">2024-12-01</td>
+<td align="left">SA</td>
+</tr>
+<tr class="even">
+<td align="left">India (frozen)</td>
+<td align="left">X13</td>
+<td align="right">12</td>
+<td align="right">300</td>
+<td align="left">2000-01-01</td>
+<td align="left">2024-12-01</td>
+<td align="left">SCA</td>
+</tr>
+<tr class="odd">
+<td align="left">Nepal (frozen)</td>
+<td align="left">X13</td>
+<td align="right">12</td>
+<td align="right">300</td>
+<td align="left">2000-01-01</td>
+<td align="left">2024-12-01</td>
+<td align="left">SA</td>
+</tr>
+<tr class="even">
+<td align="left">Philippines (frozen)</td>
+<td align="left">X13</td>
+<td align="right">12</td>
+<td align="right">300</td>
+<td align="left">2000-01-01</td>
+<td align="left">2024-12-01</td>
+<td align="left">SA</td>
+</tr>
+</tbody>
+</table>
+<p>The JVS object is a dataframe containing the quality report. To save
+it, you need to export it.</p>
+</div>
+<div id="export" class="section level2">
+<h2>Export</h2>
+<p>To export the JVS Quality Report, you need to use the writing
+function. The report can be exported as a .csv file:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">write</span>(JVS, <span class="at">format =</span> <span class="st">&quot;csv&quot;</span>, <span class="at">export_dir =</span> <span class="st">&quot;path/to/the/export/directory&quot;</span>, <span class="at">overwrite =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p>The report can be exported as a .xlsx file:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">write</span>(JVS, <span class="at">format =</span> <span class="st">&quot;xlsx&quot;</span>, <span class="at">export_dir =</span> <span class="st">&quot;path/to/the/export/directory&quot;</span>, <span class="at">overwrite =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+</div>
+<div id="comparison-v3-r" class="section level2">
+<h2>Comparison: v3 / R</h2>
+<div id="x" class="section level3">
+<h3>X</h3>
+<p>The column is called “Series” in R.</p>
+</div>
+<div id="method" class="section level3">
+<h3>Method</h3>
+<p>The names of the specifications are simply “X13” or “Tramo-Seats” in
+R, as there is no detail regarding the type of specification.</p>
+</div>
+<div id="period-nobs-start" class="section level3">
+<h3>Period, nobs, Start</h3>
+<p>No differences.</p>
+</div>
+<div id="end" class="section level3">
+<h3>End</h3>
+<p>In v3, the dates correspond to the last day of the period, whereas in
+R they correspond to the first day.</p>
+</div>
+<div id="adjustment" class="section level3">
+<h3>Adjustment</h3>
+<p>No differences.</p>
+</div>
+<div id="tests" class="section level3">
+<h3>Tests</h3>
+<p>For the tests:</p>
+<ul>
+<li>Presence of Seasonality in the RAW Series</li>
+<li>Presence of TD effects</li>
+<li>Residual Seasonality in SA Series F-test</li>
+<li>Residual TD Effect</li>
+</ul>
+<p>Very slight differences due to different thresholds between the
+interface and the cruncher.</p>
+</div>
+<div id="log-transformation-arima-model-leapyear-movingholiday-nbtd-noutliers-outlier1-outlier2-outlier3-q-stat-for-x13-stage-2-henderson-filter-final-henderson-filter-seasonal.filter" class="section level3">
+<h3>Log transformation, ARIMA Model, Leapyear, MovingHoliday, NbTD,
+Noutliers, Outlier1, Outlier2, Outlier3, Q-stat for X13, Stage 2
+Henderson Filter, Final Henderson Filter, Seasonal.Filter</h3>
+<p>No differences.</p>
+</div>
+<div id="irregular-standard-deviation" class="section level3">
+<h3>Irregular Standard Deviation</h3>
+<p>There are slight differences between v3 (which uses the correct
+number of degrees of freedom) and the R code, which uses
+<code>df = 1</code> (with the <code>sd()</code> function). In future
+versions of the JVS plug-in, the results will be identical.</p>
+</div>
+<div id="quality-for-ts-max-adj-autocorrelation-of-order-1-of-the-sa-series" class="section level3">
+<h3>Quality for TS, Max adj, Autocorrelation of order 1 of the SA
+series</h3>
+<p>No differences.</p>
+</div>
+<div id="normal-test" class="section level3">
+<h3>Normal test</h3>
+<p>The test is carried out using base R and may show slight differences
+(to within 10**4).</p>
+</div>
+<div id="negative-and-significant-autocorrelation" class="section level3">
+<h3>Negative and significant autocorrelation</h3>
+<p>No differences.</p>
+</div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
